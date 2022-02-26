@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const mongoose_fuzzy_searching = require("mongoose-fuzzy-searching");
 
 const phoneSchema = new mongoose.Schema({
     slug: {
@@ -28,6 +28,6 @@ const phoneSchema = new mongoose.Schema({
 });
 
 
-
+phoneSchema.plugin(mongoose_fuzzy_searching, { fields: ["phone_name"] });
 const Phone = mongoose.model('Phone', phoneSchema);
 module.exports = Phone;
