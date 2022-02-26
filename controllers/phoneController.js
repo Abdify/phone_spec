@@ -2,7 +2,7 @@ const User = require("../models/User");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Phone = require("../models/Phone");
-const slugify = require("slugify");
+const generateSlug = require("../utils/generateSlug");
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};
@@ -26,8 +26,9 @@ exports.searchPhones = catchAsync(async (req, res, next) => {
 });
 
 exports.addPhone = catchAsync(async (req, res, next) => {
-    const slug = slugify(req.body?.phone_name, "_");
-    const newPhone = await Phone.create({...req.body, slug});
+    const slug = await generateSlug(req.body?.phone_name);
+
+    const newPhone = await Phone.create({ ...req.body, slug });
 
     if (!newPhone)
         return next(
