@@ -2,6 +2,7 @@ const User = require("../models/User");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Phone = require("../models/Phone");
+const slugify = require("slugify");
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};
@@ -24,24 +25,20 @@ exports.searchPhones = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.createUser = catchAsync(async (req, res, next) => {
-    const newUser = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm,
-    });
+exports.addPhone = catchAsync(async (req, res, next) => {
+    const slug = slugify(req.body?.phone_name, "_");
+    const newPhone = await Phone.create({...req.body, slug});
 
-    if (!newUser)
+    if (!newPhone)
         return next(
             new AppError(`
-      Can't create user due to invalid details, 400
+      Can't add phone due to invalid details, 400
       `)
         );
 
     res.status(200).json({
         status: "success",
-        user: newUser,
+        phone: newPhone,
     });
 });
 

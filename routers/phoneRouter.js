@@ -13,6 +13,10 @@ router
 
 
 router
+  .route('/')
+  .post(phoneController.addPhone);
+
+router
   .route('/search')
   .get(phoneController.searchPhones);
 
