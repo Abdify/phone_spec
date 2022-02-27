@@ -16,8 +16,8 @@ const globalErrorHandler = require('./middlewares/globalErrorHandler');
 const AppError = require('./utils/appError');
 
 // view engine setup
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views'));
 
 // var whitelist = ['http://example1.com', 'http://example2.com']
 // var corsOptions = {
@@ -43,13 +43,14 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+console.log("aa")
 // $ CORS
-app.use(cors());
+app.use(cors({origin: '*', methods: ["GET"]}));
 
 //  set limit request from same API in timePeroid from same ip
 const limiter = rateLimit({
   max: 100, //   max number of limits
-  windowMs: 60 * 60 * 1000, // hour
+  windowMs: 30 * 60 * 1000, // hour
   message:
     ' Too many req from this IP , please Try  again in an Hour ! ',
 });
@@ -76,8 +77,6 @@ app.get("/", (req, res) => {
 })
 
 // routes
-// app.use('/api/users', userRouter);
-// app.use('/api/auth', authRoutes);
 app.use('/api/phones', phoneRouter);
 
 // handling all (get,post,update,delete.....) unhandled routes

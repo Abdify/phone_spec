@@ -24,6 +24,10 @@ router
   .route('/add-from-list')
   .post(phoneController.addPhoneDetailsFromList);
   
+router
+  .route('/add-from-list-formatted')
+  .post(phoneController.addFormattedPhoneDetails);
+  
 //! deprecated :)
 router
   .route('/')
