@@ -5,26 +5,29 @@ const phoneController = require('../controllers/phoneController');
 
 const router = express.Router();
 
-// router.use(protect); //  protect all router which are comming after this middleware
-router
-  .route('/me')
-  .get(phoneController.getMe, phoneController.getUser)
-  .patch(phoneController.getMe, phoneController.updateUser);
-
-
-router
-  .route('/')
-  .post(phoneController.addPhone);
-
 router
   .route('/search')
   .get(phoneController.searchPhones);
 
 router
-  .route('/:id')
-  .get(phoneController.getUser)
-  .patch(phoneController.updateUser)
-  .delete(phoneController.deleteUser);
-  // .delete(restrictTo('admin'), userController.deleteUser);
+  .route("/:slug")
+  .get(phoneController.getPhone);
+
+// router.use(protect); //  protect all routes which are coming after this middleware
+
+router
+  .route('/add-list/:brandSlug')
+  .post(phoneController.addPhoneList);
+  
+// get all phones from PhoneList, scrap and save all phones detail
+router
+  .route('/add-from-list')
+  .post(phoneController.addPhoneDetailsFromList);
+  
+//! deprecated :)
+router
+  .route('/')
+  .post(phoneController.addPhone);
+
 
 module.exports = router;
