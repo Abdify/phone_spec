@@ -10,7 +10,6 @@ const path = require('path');
 const hpp = require('hpp');
 
 const phoneRouter = require('./routers/phoneRouter');
-const authRoutes = require('./routers/authRoutes');
 
 const globalErrorHandler = require('./middlewares/globalErrorHandler');
 
